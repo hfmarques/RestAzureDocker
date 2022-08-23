@@ -1,7 +1,7 @@
 ﻿namespace WebApi.Models;
 
 #nullable disable
-public class PersonModel
+public class Person
 {
     public long Id { get; set; }
     public string FirstName { get; set; }
