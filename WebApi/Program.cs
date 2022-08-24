@@ -1,9 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using WebApi.Data.Context;
 using WebApi.Services;
 using WebApi.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<SqlServerContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RestAzureDocker")));
+
 builder.Services.AddScoped<IPersonService, PersonService>();
 
 builder.Services.AddControllers();

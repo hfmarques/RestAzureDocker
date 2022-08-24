@@ -1,55 +1,49 @@
-﻿using WebApi.Models;
+﻿using WebApi.Data.Context;
+using WebApi.Models;
 
 namespace WebApi.Services.Implementations;
 
 public class PersonService : IPersonService
 {
+    private readonly SqlServerContext context;
+
+    public PersonService(SqlServerContext context)
+    {
+        this.context = context;
+    }
+
     public Person Create(Person person)
     {
+        context.People.Add(person);
+        context.SaveChanges();
         return person;
     }
 
     public Person? FindById(long id)
     {
-        return new Person
-        {
-            Id = 1,
-            FirstName = "Heber",
-            LastName = "Marques",
-            Address = "Rio de Janeiro",
-            Gender = "Male"
-        };
+        return context.People.Find(id);
     }
 
     public List<Person> FindAll()
     {
-        return new List<Person>
-        {
-            new()
-            {
-                Id = 1,
-                FirstName = "Heber",
-                LastName = "Marques",
-                Address = "Rio de Janeiro",
-                Gender = "Male"
-            },
-            new()
-            {
-                Id = 2,
-                FirstName = "Hellen",
-                LastName = "Miranda",
-                Address = "Rio de Janeiro",
-                Gender = "Female"
-            }
-        };
+        var people = context.People;
+
+        return people.ToList();
     }
 
     public Person Update(Person person)
     {
+        context.People.Update(person);
+        context.SaveChanges();
+
         return person;
     }
 
     public void Delete(long id)
     {
+        var person = FindById(id);
+        if (person is null)
+            return;
+        context.People.Remove(person);
     }
 }
