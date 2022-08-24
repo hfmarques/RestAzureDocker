@@ -1,4 +1,5 @@
-﻿using WebApi.Data.Context;
+﻿using System.Data;
+using WebApi.Data.Context;
 using WebApi.Models;
 
 namespace WebApi.Services.Implementations;
@@ -33,6 +34,8 @@ public class PersonService : IPersonService
 
     public Person Update(Person person)
     {
+        if (FindById(person.Id) is null)
+            throw new DataException("Person do not exists");
         context.People.Update(person);
         context.SaveChanges();
 

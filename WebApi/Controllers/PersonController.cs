@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.Services;
 
 namespace WebApi.Controllers;
 
+[ApiVersion(1.0)]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class PersonController : ControllerBase
 {
     private readonly ILogger<PersonController> logger;
