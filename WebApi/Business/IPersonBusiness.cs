@@ -1,8 +1,8 @@
 ﻿using WebApi.Models;
 
-namespace WebApi.Services;
+namespace WebApi.Business;
 
-public interface IPersonService
+public interface IPersonBusiness
 {
     Person Create(Person person);
     Person? FindById(long id);

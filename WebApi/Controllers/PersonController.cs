@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Business;
 using WebApi.Models;
-using WebApi.Services;
 
 namespace WebApi.Controllers;
 
@@ -11,24 +11,24 @@ namespace WebApi.Controllers;
 public class PersonController : ControllerBase
 {
     private readonly ILogger<PersonController> logger;
-    private readonly IPersonService personService;
+    private readonly IPersonBusiness personBusiness;
 
-    public PersonController(ILogger<PersonController> logger, IPersonService personService)
+    public PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness)
     {
         this.logger = logger;
-        this.personService = personService;
+        this.personBusiness = personBusiness;
     }
 
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(personService.FindAll());
+        return Ok(personBusiness.FindAll());
     }
 
     [HttpGet("{id:long}")]
     public IActionResult Get(long id)
     {
-        var person = personService.FindById(id);
+        var person = personBusiness.FindById(id);
 
         if (person == null) return NotFound();
 
@@ -40,7 +40,7 @@ public class PersonController : ControllerBase
     {
         if (person is null) return BadRequest();
 
-        return Created("", personService.Create(person));
+        return Created("", personBusiness.Create(person));
     }
 
     [HttpPut]
@@ -48,13 +48,13 @@ public class PersonController : ControllerBase
     {
         if (person is null) return BadRequest();
 
-        return Ok(personService.Update(person));
+        return Ok(personBusiness.Update(person));
     }
 
     [HttpDelete("{id:long}")]
     public IActionResult Delete(long id)
     {
-        personService.Delete(id);
+        personBusiness.Delete(id);
 
         return NoContent();
     }
