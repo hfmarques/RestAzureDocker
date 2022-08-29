@@ -5,8 +5,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi;
 using WebApi.Business;
 using WebApi.Business.Implementations;
-using WebApi.Data.Context;
+using WebApi.Data.Converter.Implementations;
 using WebApi.Repository;
+using WebApi.Repository.Context;
 using WebApi.Repository.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +17,10 @@ builder.Services.AddDbContext<SqlServerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RestAzureDocker")));
 
 builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
+builder.Services.AddScoped<PersonConverter>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(o => { o.RespectBrowserAcceptHeader = true; }).AddXmlSerializerFormatters();
 
 builder.Services.AddApiVersioning(
         options =>

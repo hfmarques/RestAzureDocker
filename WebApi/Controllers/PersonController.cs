@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business;
-using WebApi.Models;
+using WebApi.Data.Vo;
 
 namespace WebApi.Controllers;
 
@@ -36,19 +36,19 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(Person? person)
+    public IActionResult Post(PersonVo? personVo)
     {
-        if (person is null) return BadRequest();
+        if (personVo is null) return BadRequest();
 
-        return Created("", personBusiness.Create(person));
+        return Created("", personBusiness.Create(personVo));
     }
 
     [HttpPut]
-    public IActionResult Put(Person? person)
+    public IActionResult Put(PersonVo? personVo)
     {
-        if (person is null) return BadRequest();
+        if (personVo is null) return BadRequest();
 
-        return Ok(personBusiness.Update(person));
+        return Ok(personBusiness.Update(personVo));
     }
 
     [HttpDelete("{id:long}")]

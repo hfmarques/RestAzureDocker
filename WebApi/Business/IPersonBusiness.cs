@@ -1,12 +1,12 @@
-﻿using WebApi.Models;
+﻿using WebApi.Data.Vo;
 
 namespace WebApi.Business;
 
 public interface IPersonBusiness
 {
-    Person Create(Person person);
-    Person? FindById(long id);
-    List<Person> FindAll();
-    Person Update(Person person);
+    PersonVo Create(PersonVo personVo);
+    PersonVo? FindById(long id);
+    List<PersonVo> FindAll();
+    PersonVo Update(PersonVo personVo);
     void Delete(long id);
 }

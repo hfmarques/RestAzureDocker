@@ -1,5 +1,5 @@
-﻿using WebApi.Data.Context;
-using WebApi.Models;
+﻿using WebApi.Models;
+using WebApi.Repository.Context;
 using WebApi.Repository.Generic;
 
 namespace WebApi.Repository.Implementations;
