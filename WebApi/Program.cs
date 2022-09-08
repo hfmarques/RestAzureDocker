@@ -6,6 +6,9 @@ using WebApi;
 using WebApi.Business;
 using WebApi.Business.Implementations;
 using WebApi.Data.Converter.Implementations;
+using WebApi.HyperMedia.Abstract;
+using WebApi.HyperMedia.Enrich;
+using WebApi.HyperMedia.Filters;
 using WebApi.Repository;
 using WebApi.Repository.Context;
 using WebApi.Repository.Implementations;
@@ -21,6 +24,11 @@ builder.Services.AddScoped<PersonConverter>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 builder.Services.AddControllers(o => { o.RespectBrowserAcceptHeader = true; }).AddXmlSerializerFormatters();
+
+var filterOptions = new HyperMediaFilterOptions();
+filterOptions.ContentResponseEnrichList = new List<IResponseEnrich>();
+filterOptions.ContentResponseEnrichList.Add(new PersonEnrich());
+builder.Services.AddSingleton(filterOptions);
 
 builder.Services.AddApiVersioning(
         options =>
@@ -91,5 +99,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute(
+    name: "DefaultApi",
+    pattern: "{controller=values}/{id?}");
 
 app.Run();

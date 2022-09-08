@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business;
 using WebApi.Data.Vo;
+using WebApi.HyperMedia.Filters;
 
 namespace WebApi.Controllers;
 
@@ -20,12 +21,14 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
+    [TypeFilter(typeof(HyperMediaFilter))]
     public IActionResult Get()
     {
         return Ok(personBusiness.FindAll());
     }
 
     [HttpGet("{id:long}")]
+    [TypeFilter(typeof(HyperMediaFilter))]
     public IActionResult Get(long id)
     {
         var person = personBusiness.FindById(id);
@@ -36,6 +39,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
+    [TypeFilter(typeof(HyperMediaFilter))]
     public IActionResult Post(PersonVo? personVo)
     {
         if (personVo is null) return BadRequest();
@@ -44,6 +48,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPut]
+    [TypeFilter(typeof(HyperMediaFilter))]
     public IActionResult Put(PersonVo? personVo)
     {
         if (personVo is null) return BadRequest();
