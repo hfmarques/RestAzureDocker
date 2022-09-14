@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business;
 using WebApi.Data.Vo;
@@ -9,6 +10,7 @@ namespace WebApi.Controllers;
 [ApiVersion(1.0)]
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
+[Authorize("Bearer")]
 public class PersonController : ControllerBase
 {
     private readonly ILogger<PersonController> logger;

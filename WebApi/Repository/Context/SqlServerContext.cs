@@ -7,6 +7,7 @@ public class SqlServerContext : DbContext
 {
 #nullable disable
     public virtual DbSet<Person> People { get; set; }
+    public virtual DbSet<User> User { get; set; }
 #nullable enable
 
     public SqlServerContext(DbContextOptions<SqlServerContext> options) : base(options)
