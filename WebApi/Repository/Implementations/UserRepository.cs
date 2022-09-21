@@ -6,9 +6,9 @@ namespace WebApi.Repository.Implementations;
 
 public class UserRepository : Repository<User>, IUserRepository
 {
-    private readonly SqlServerContext context;
+    private readonly MySqlContext context;
 
-    public UserRepository(SqlServerContext context) : base(context)
+    public UserRepository(MySqlContext context) : base(context)
     {
         this.context = context;
     }

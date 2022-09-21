@@ -3,14 +3,14 @@ using WebApi.Models;
 
 namespace WebApi.Repository.Context;
 
-public class SqlServerContext : DbContext
+public class MySqlContext : DbContext
 {
 #nullable disable
     public virtual DbSet<Person> People { get; set; }
     public virtual DbSet<User> User { get; set; }
 #nullable enable
 
-    public SqlServerContext(DbContextOptions<SqlServerContext> options) : base(options)
+    public MySqlContext(DbContextOptions<MySqlContext> options) : base(options)
     {
     }
 

@@ -22,8 +22,14 @@ using WebApi.Repository.Implementations;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<SqlServerContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RestAzureDocker")));
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+builder.Services.AddDbContext<MySqlContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("RestAzureDocker"), serverVersion)
+);
+
+using var scope = builder.Services.BuildServiceProvider().CreateScope();
+using var db = scope.ServiceProvider.GetService<MySqlContext>();
+await db.Database.MigrateAsync();
 
 var tokenConfigurations = new TokenConfiguration();
 new ConfigureFromConfigurationOptions<TokenConfiguration>(

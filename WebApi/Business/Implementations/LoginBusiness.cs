@@ -3,6 +3,7 @@ using System.Security.Claims;
 using WebApi.Configurations;
 using WebApi.Data.Converter.Implementations;
 using WebApi.Data.Vo;
+using WebApi.Repository;
 
 namespace WebApi.Business.Implementations;
 
@@ -13,18 +14,29 @@ public class LoginBusiness : ILoginBusiness
     private readonly IUserBusiness userBusiness;
     private readonly ITokenBusiness tokenBusiness;
     private readonly UserConverter converter;
+    private readonly IUserRepository userRepository;
 
     public LoginBusiness(
         TokenConfiguration configuration,
         IUserBusiness userBusiness,
         ITokenBusiness tokenBusiness,
-        UserConverter converter
-    )
+        UserConverter converter, IUserRepository userRepository)
     {
         this.configuration = configuration;
         this.userBusiness = userBusiness;
         this.tokenBusiness = tokenBusiness;
         this.converter = converter;
+        this.userRepository = userRepository;
+    }
+
+    public void NewUser(UserVo userVo)
+    {
+        if (userVo.Id != 0)
+        {
+            throw new ArgumentException("Id cannot be different than 0");
+        }
+
+        userRepository.Add(converter.Parse(userVo)!);
     }
 
     public TokenVo? ValidateCredentials(UserVo userVo)

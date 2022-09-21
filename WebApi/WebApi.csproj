@@ -7,19 +7,18 @@
         <UserSecretsId>0c5ea501-81e6-4be4-839d-4348b84ee503</UserSecretsId>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="6.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Business;
 using WebApi.Data.Vo;
 
@@ -13,6 +14,25 @@ public class AuthController : ControllerBase
     public AuthController(ILoginBusiness loginBusiness)
     {
         this.loginBusiness = loginBusiness;
+    }
+    
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("newUser")]
+    public IActionResult NewUser(UserVo? user)
+    {
+        if (user is null)
+        {
+            return BadRequest();
+        }
+
+        var token = loginBusiness.ValidateCredentials(user);
+        if (token is null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(token);
     }
 
     [HttpPost]
