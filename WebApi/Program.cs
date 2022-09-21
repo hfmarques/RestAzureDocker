@@ -27,10 +27,6 @@ builder.Services.AddDbContext<MySqlContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("RestAzureDocker"), serverVersion)
 );
 
-using var scope = builder.Services.BuildServiceProvider().CreateScope();
-using var db = scope.ServiceProvider.GetService<MySqlContext>();
-await db.Database.MigrateAsync();
-
 var tokenConfigurations = new TokenConfiguration();
 new ConfigureFromConfigurationOptions<TokenConfiguration>(
         builder.Configuration.GetSection("TokenConfiguration"))
@@ -166,6 +162,10 @@ if (app.Environment.IsDevelopment())
                 options.SwaggerEndpoint(url, name);
             }
         });
+    
+    using var scope = app.Services.CreateScope();
+    await using var db = scope.ServiceProvider.GetService<MySqlContext>();
+    await db!.Database.MigrateAsync();
 }
 
 app.UseHttpsRedirection();
